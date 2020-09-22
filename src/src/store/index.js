@@ -12,11 +12,29 @@ export const store = new Vuex.Store({
   mutations: {
       logIn(state, payload) {
         state.loggedIn = payload
+      },
+      resetUser(state) {
+        state.user = null
+      },
+      resetAccessToken(state) {
+        state.accessToken = null
+      },
+      setUser(state, payload) {
+        state.user = payload;
+      },
+      setAccessToken(state, payload) {
+        state.accessToken = payload;
       }
-  },
+  }, 
   getters: {
     isLoggedIn: state => {
       return state.loggedIn
+    },
+    user: state => {
+      return state.user
+    },
+    accessToken: state => {
+      return state.accessToken
     }
   }
 })

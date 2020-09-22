@@ -5,24 +5,21 @@
       <router-link to="/about">About</router-link>
     </div> -->
     <header>
-      <a href="/">
+        {{_loggedIn}}
+      <router-link to="/">
         <img
           src="https://cdn.glitch.com/a1686874-cbbf-4ca9-b412-cd53a73b9ceb%2Fglitchypastepen.png?v=1587918769653"
           height="100px"
-      /></a>
+      /></router-link>
       <span style="float:right;margin-right:20px;">
-        <button @click="logout()" v-if="loggedIn">
-            Logout
-        </button>
-        <button @click="login()" v-if="notLoggedIn">
+        <router-link to="/logout">
+            <button v-if="loggedIn">
+                Logout
+            </button>
+        </router-link>
+        <button @click="login()" v-if="loggedIn == false">
             Login
-          </button>
-        <a
-          href="https://github.com/login/oauth/authorize?client_id=b1619bb3723d36119cfa"
-          ><button v-if="notLoggedIn">
-            Signup
-          </button></a
-        >
+        </button>
       </span>
     </header>
     <div id="blob">
@@ -48,8 +45,20 @@
     export default {
         data: function() {
             return {
-                loggedIn: this.$store.getters.isLoggedIn,
-                notLoggedIn: !this.$store.getters.isLoggedIn
+                loggedIn: this._loggedIn || false
+            }
+        },
+        computed: {
+            _loggedIn () {
+                return this.$store.getters.isLoggedIn;
+                // Or return basket.getters.fruitsCount
+                // (depends on your design decisions).
+            }
+        },
+        watch: {
+            _loggedIn (newValue, oldValue) {
+                // Our fancy notification (2).
+                console.log(`${newValue}`)
             }
         },
         methods: {
@@ -64,6 +73,10 @@
                     console.log(token);
                     console.log(user);
 
+                    that.$store.commit('logIn', true);
+                    that.$store.commit('setUser', user);
+                    that.$store.commit('setAccessToken', token);
+
                     // ...
                 }).catch(function(error) {
                     var errorCode = error.code;
@@ -72,13 +85,14 @@
                     var credential = error.credential;
 
                     return;
-                }).then(() => {
-                    this.$store.commit('logIn', true);
-                    this.loggedIn = true;
-                    this.notLoggedIn = false;
-                    console.log(this.$store.getters.isLoggedIn);
-                });
-                console.log(this.$store.getters.isLoggedIn)
+                })
+                // .then(() => {
+                //     this.$store.commit('logIn', true);
+                //     this.loggedIn = true;
+                //     this.notLoggedIn = false;
+                //     console.log(this.$store.getters.isLoggedIn);
+                // });
+                // console.log(this.$store.getters.isLoggedIn)
             },
             logout: function() {
                 (async() => {
@@ -86,7 +100,6 @@
                         await firebase.auth().signOut();
                         this.$store.commit('logIn', false);
                         this.loggedIn = false;
-                        this.notLoggedIn = true;
                     } catch (e){
                         console.error(e);
                     } 

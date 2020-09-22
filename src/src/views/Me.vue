@@ -1,10 +1,35 @@
 <template>
-
+    <center>
+        <img :src="user.photoURL" style="border-radius:50%;width:300px;" />
+    </center>
 </template>
 
 <script>
 
-    export default {}
+    export default {
+        name: 'User',
+        data: function() {
+            return {
+                user: this._user
+            }
+        },
+        computed: {
+            _user() {
+                return this.$store.getters.user;
+            }
+        },
+        watch: {
+            _user(oldValue, newValue) {
+                console.log(oldValue);
+                console.log(newValue);
+            }
+        },
+        created: function() {
+            if (this.$store.getters.isLoggedIn === false) {
+                this.$router.push('/');
+            }
+        }
+    }
 
 </script>
 

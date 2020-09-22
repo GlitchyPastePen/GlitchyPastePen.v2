@@ -7,8 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@endb/mongo": "^1.3.0",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "endb": "^1.3.0",
     "firebase": "^7.21.0",
     "vue": "^2.6.11",
     "vue-authenticate": "^1.4.1",
