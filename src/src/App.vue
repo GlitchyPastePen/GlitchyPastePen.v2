@@ -13,11 +13,11 @@
       /></router-link>
       <span style="float:right;margin-right:20px;">
         <router-link to="/logout">
-            <button v-if="loggedIn">
+            <button v-if="loggedIn === true">
                 Logout
             </button>
         </router-link>
-        <button @click="login()" v-if="loggedIn == false">
+        <button @click="login()" v-if="loggedIn === false">
             Login
         </button>
       </span>
@@ -73,6 +73,7 @@
                     console.log(token);
                     console.log(user);
 
+                    that.loggedIn = true;
                     that.$store.commit('logIn', true);
                     that.$store.commit('setUser', user);
                     that.$store.commit('setAccessToken', token);

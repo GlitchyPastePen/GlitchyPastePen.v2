@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Logout from '../views/Logout.vue';
+// import User from '../views/User.vue';
 
 Vue.use(VueRouter);
 
@@ -31,7 +32,6 @@ const routes = [
   },
   {
     path: '/u/:user',
-    name: 'User',
     component: () => import('../views/User.vue')
   },
 ];

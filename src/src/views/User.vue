@@ -18,14 +18,6 @@
 
 <script>
 
-    // var Endb = require('endb');
-    import Endb from "endb";
-    import "@endb/mongo";
-    var user = new Endb({
-        uri: process.env.MONGO_URI + "user?retryWrites=true&w=majority",
-        adapter: "mongodb"
-    });
-
     export default {
         name: 'User',
         data: function() {
@@ -56,20 +48,17 @@
                 .then(res => res.json())
                 .then(data => this.user = data)
 
-            var project = new Endb({
-                uri: process.env.MONGO_URI + "projects?retryWrites=true&w=majority",
-                adapter: "mongodb"
-            });
+            
 
-            (async() => {
-                var projects = await project.all();
+            // (async() => {
+            //     var projects = await project.all();
 
-                projects = projects.filter(
-                    project => project.value.owner === this.$route.params.user
-                );
+            //     projects = projects.filter(
+            //         project => project.value.owner === this.$route.params.user
+            //     );
 
-                this.projects = projects;
-            })
+            //     this.projects = projects;
+            // })
         }
     }
 
