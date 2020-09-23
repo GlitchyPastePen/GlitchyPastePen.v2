@@ -5,13 +5,15 @@
             <img :src="user.avatar_url" style="border-radius:50%;width:300px;" />
         </center>
 
-        <div class = "project" v-for="project in projects">
-          {{project.key}} &nbsp;&nbsp;
-          <br />
-          <img style="float:right;margin-right:20px;" onclick="remove('<%= project.key %>')" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fdelete.svg?v=1589450120507" height="30px">
-          <a href="/p/<%= project.key %>"><img style="float:right;margin-right:10px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fexternal.svg?v=1589450399039" height="30px;"></a>
-          <a href="/editor/<%= project.key %>"><img style="float:right;margin-right:15px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fedit.svg?v=1589450679556" height="30px"></a>
-          <br /><br />
+        <div id="main">
+            <div class = "project" v-for="project in projects">
+            {{project.key}} &nbsp;&nbsp;
+            <br />
+            <img style="float:right;margin-right:20px;" onclick="remove('<%= project.key %>')" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fdelete.svg?v=1589450120507" height="30px">
+            <a :href="'/p/' + project.key"><img style="float:right;margin-right:10px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fexternal.svg?v=1589450399039" height="30px;"></a>
+            <a :href="'/editor/' + project.key"><img style="float:right;margin-right:15px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fedit.svg?v=1589450679556" height="30px"></a>
+            <br /><br />
+            </div>
         </div>
     </div>
 </template>
@@ -26,39 +28,16 @@
                 projects: null
             }
         },
-        // computed: {
-        //     _user() {
-        //         // let user = this.$axios.get(`https://api.github.com/users/${this.$route.params.user}`);
-
-        //         console.log(user);
-        //         return user.info;
-        //     }
-        // }
         mounted: function() {
-
-            // (async() => {
-            //     try {
-            //         await user.
-            //     } catch (e) {
-
-            //     }
-            // })()
 
             fetch(`https://api.github.com/users/${this.$route.params.user}`)
                 .then(res => res.json())
                 .then(data => this.user = data)
 
-            
+            fetch(`https://gppapi.now.sh/api/getprojects?user=${this.$route.params.user}`)
+                .then(res => res.json())
+                .then(data => this.projects = data)
 
-            // (async() => {
-            //     var projects = await project.all();
-
-            //     projects = projects.filter(
-            //         project => project.value.owner === this.$route.params.user
-            //     );
-
-            //     this.projects = projects;
-            // })
         }
     }
 
@@ -93,8 +72,8 @@
     }
     
     #main {
-      margin-left: 15%;
-      margin-right: 15%;
+      margin-left: 15vw;
+      margin-right: 15vw;
     }
     
     .project {
