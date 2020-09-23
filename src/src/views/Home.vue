@@ -9,7 +9,7 @@
             </p>
             <center>
                 <img
-                src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fscreely-1591191781898.png?v=1591191852875"
+                src="https://cdn.khaleelgibran.com/glitchypastepen_preview.png"
                 width="100%"
                 />
             </center>

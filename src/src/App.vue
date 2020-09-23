@@ -5,21 +5,19 @@
       <router-link to="/about">About</router-link>
     </div> -->
     <header>
-        {{_loggedIn}}
       <router-link to="/">
         <img
-          src="https://cdn.glitch.com/a1686874-cbbf-4ca9-b412-cd53a73b9ceb%2Fglitchypastepen.png?v=1587918769653"
+          src="https://cdn.khaleelgibran.com/glitchypastepen.png"
           height="100px"
       /></router-link>
       <span style="float:right;margin-right:20px;">
-        <router-link to="/logout">
-            <button v-if="loggedIn === true">
-                Logout
-            </button>
-        </router-link>
+        <button v-if="loggedIn === true" @click="logout()">
+            Logout
+        </button>
         <button @click="login()" v-if="loggedIn === false">
             Login
         </button>
+        <img :src="user.photoURL" class="avatar" v-if="loggedIn === true" />
       </span>
     </header>
     <div id="blob">
@@ -45,7 +43,8 @@
     export default {
         data: function() {
             return {
-                loggedIn: this._loggedIn || false
+                loggedIn: this._loggedIn || false,
+                user: null
             }
         },
         computed: {
@@ -74,6 +73,7 @@
                     console.log(user);
 
                     that.loggedIn = true;
+                    that.user = user;
                     that.$store.commit('logIn', true);
                     that.$store.commit('setUser', user);
                     that.$store.commit('setAccessToken', token);
@@ -96,11 +96,12 @@
                 // console.log(this.$store.getters.isLoggedIn)
             },
             logout: function() {
+                var that = this;
                 (async() => {
                     try {
                         await firebase.auth().signOut();
-                        this.$store.commit('logIn', false);
-                        this.loggedIn = false;
+                        that.$store.commit('logIn', false);
+                        that.loggedIn = false;
                     } catch (e){
                         console.error(e);
                     } 
@@ -117,55 +118,61 @@
     @import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@500&family=IBM+Plex+Mono&display=swap");
 
     body {
-    --fore: black;
-    --back: #0F0F0F;
-    background-color: var(--back);
-    color: var(--fore);
-    font-family: "Inter", "Helvetica", "Arial", sans-serif;
-    margin-top: 30px;
-    margin: 0px;
+        --fore: black;
+        --back: #0F0F0F;
+        background-color: var(--back);
+        color: var(--fore);
+        font-family: "Inter", "Helvetica", "Arial", sans-serif;
+        margin-top: 30px;
+        margin: 0px;
     }
 
     header {
-    margin-left: 0px;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #DCDCDC;
-    left: 0px;
+        margin-left: 0px;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #DCDCDC;
+        left: 0px;
     }
 
 
     button {
-    background-color: rgba(0, 0, 0, 0);
-    display: inline-block;
-    cursor: pointer;
-    border: 1px solid white;
-    margin-right: 20px;
-    font-size: 16px;
-    background-color: black;
-    color: white;
-    font-family: "Inter", sans-serif;
-    transition: 300ms !important;
-    margin-bottom: 10px;
-    padding-top: 10px;
-    padding-right: 20px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0);
+        display: inline-block;
+        cursor: pointer;
+        border: 1px solid white;
+        margin-right: 20px;
+        font-size: 16px;
+        background-color: black;
+        color: white;
+        font-family: "Inter", sans-serif;
+        transition: 300ms !important;
+        margin-bottom: 10px;
+        padding-top: 10px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        border-radius: 5px;
     }
 
     button:hover {
-    background-color: white !important;
-    color: black !important;
-    transition: 300ms !important;
+        background-color: white !important;
+        color: black !important;
+        transition: 300ms !important;
     }
 
     #blob {
-    position: absolute;
-    z-index: -1;
-    top: -200px;
-    left: -200px;
-    width: 50vw;
+        position: absolute;
+        z-index: -1;
+        top: -200px;
+        left: -200px;
+        width: 50vw;
+    }
+
+    .avatar {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
     }
 </style>

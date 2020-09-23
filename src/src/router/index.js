@@ -34,6 +34,10 @@ const routes = [
     path: '/u/:user',
     component: () => import('../views/User.vue')
   },
+  {
+    path: '/edit/:project',
+    component: () => import('../views/Editor.vue')
+  }
 ];
 
 const router = new VueRouter({
