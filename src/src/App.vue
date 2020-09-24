@@ -12,7 +12,7 @@
       /></router-link>
       <span style="float:right;margin-right:0px;">
         <div class="user-menu" v-if="showMenu">
-            <span class="menu-option">My Projects</span><br>
+            <router-link to="/me"><span class="menu-option">My Projects</span></router-link><br>
             <span class="menu-option" id="logout-option" @click="logout()">Logout</span>
         </div>
         <button @click="login()" v-if="loggedIn === false">
@@ -51,22 +51,15 @@
         },
         computed: {
             _loggedIn () {
-                return this.$store.getters.isLoggedIn;
-                // Or return basket.getters.fruitsCount
-                // (depends on your design decisions).
-            }
-        },
-        watch: {
-            _loggedIn (newValue, oldValue) {
-                // Our fancy notification (2).
-                console.log(`${newValue}`)
+                return this.$session.exists();
             }
         },
         methods: {
             login: function() {
                 console.log(firebase);
-                console.log(this.$store);
+                console.log(this.$session.exists());
                 var provider = new firebase.auth.GithubAuthProvider();
+                provider.addScope('read:user');
                 var that = this;
                 firebase.auth().signInWithPopup(provider).then(function(result) {
                     var token = result.credential.accessToken;
@@ -76,9 +69,25 @@
 
                     that.loggedIn = true;
                     that.user = user;
-                    that.$store.commit('logIn', true);
-                    that.$store.commit('setUser', user);
-                    that.$store.commit('setAccessToken', token);
+
+                    that.$session.start();
+                    that.$session.set("user", user);
+                    that.$session.set("accessToken". token);
+                    
+                    (async() => {
+            
+                        async function fetchGitHubUser(token) {
+                            const request = await fetch("https://api.github.com/user", {
+                                headers: {
+                                    Authorization: "token " + token
+                                }
+                            });
+                            return await request.json();
+                        }
+
+                        that.$session.set("github", await fetchGitHubUser(token));
+ 
+                    })();
 
                     // ...
                 }).catch(function(error) {
@@ -110,9 +119,15 @@
                 // })
                 var that = this;
                 firebase.auth().signOut().then(function() {
-                    that.$store.commit =('logIn', false);
+                    that.$session.destroy();
                     that.loggedIn = false;
                 });
+            }
+        },
+        created: function() {
+            if (this.$session.exists() === true) {
+                this.loggedIn = true;
+                this.user = this.$session.get("user");
             }
         }
     }
@@ -125,7 +140,7 @@
     @import url("https://fonts.googleapis.com/css2?family=Fira+Mono:wght@500&family=IBM+Plex+Mono&display=swap");
 
     body {
-        --fore: black;
+        --fore: white;
         --back: #0F0F0F;
         background-color: var(--back);
         color: var(--fore);

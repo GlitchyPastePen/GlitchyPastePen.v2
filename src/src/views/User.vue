@@ -34,7 +34,7 @@
                 .then(res => res.json())
                 .then(data => this.user = data)
 
-            fetch(`https://gppapi.now.sh/api/getprojects?user=${this.$route.params.user}`)
+            fetch(`https://gppapi.now.sh/api/projects?user=${this.$route.params.user}`)
                 .then(res => res.json())
                 .then(data => this.projects = data)
 

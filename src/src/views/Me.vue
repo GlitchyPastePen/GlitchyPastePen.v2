@@ -1,7 +1,22 @@
 <template>
-    <center>
-        <img :src="user.photoURL" style="border-radius:50%;width:300px;" />
-    </center>
+    <div>
+        <center>
+            <br><br>
+            <img :src="user.avatar_url" style="border-radius:50%;width:300px;" />
+            <h2>{{user.login}}</h2>
+            <span class="email">{{user.email}}</span>
+        </center>
+        <div id="main">
+            <div class = "project" v-for="project in projects">
+                {{project.key}} &nbsp;&nbsp;
+                <br />
+                <img style="float:right;margin-right:20px;" onclick="remove('<%= project.key %>')" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fdelete.svg?v=1589450120507" height="30px">
+                <a :href="'/p/' + project.key"><img style="float:right;margin-right:10px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fexternal.svg?v=1589450399039" height="30px;"></a>
+                <a :href="'/editor/' + project.key"><img style="float:right;margin-right:15px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fedit.svg?v=1589450679556" height="30px"></a>
+                <br /><br />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -10,24 +25,26 @@
         name: 'User',
         data: function() {
             return {
-                user: this._user
-            }
-        },
-        computed: {
-            _user() {
-                return this.$store.getters.user;
-            }
-        },
-        watch: {
-            _user(oldValue, newValue) {
-                console.log(oldValue);
-                console.log(newValue);
+                user: this.$session.get("github"),
+                projects: null
             }
         },
         created: function() {
-            if (this.$store.getters.isLoggedIn === false) {
+            if (!this.$session.exists()) {
                 this.$router.push('/');
+            } else {
+                console.log("exists!!!")
+                console.log(this.$session.get("user"))
             }
+        },
+        mounted: function() {
+
+            const githubUser = this.$session.get("github").login;
+
+            fetch(`https://gppapi.now.sh/api/projects?user=${githubUser}`)
+                .then(res => res.json())
+                .then(data => this.projects = data)
+
         }
     }
 
@@ -40,8 +57,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@500&family=IBM+Plex+Mono&display=swap');
     
     body {
-      --fore: black;
-      --back: white;
+      --fore: white;
+      --back: #0F0F0F;
       background-color: var(--back);
       color: black;
       font-family: "Inter", "Helvetica", "Arial", sans-serif;
@@ -52,6 +69,12 @@
       margin-left: 25px;
       margin-top: 30px;
     }
+
+    h2 {
+        color: white;
+        margin-bottom: 0px;
+    }
+
     header {
       margin-left: 0px;
       padding-left: 20px;
@@ -72,8 +95,7 @@
       padding-bottom: 10px;
       font-family: "Fira Mono", "Inter", "Raleway", sans-serif;
       transition: 1s ease;
-      background-color: white;
-      border: 1px solid grey;
+      border: 3px solid yellow;
       border-radius: 5px;
       margin-top: 20px;
       display: block;
@@ -81,22 +103,9 @@
       left: 0px;
       font-size: 25px;
       overflow: hidden;
-      box-shadow:
-        0 0px 2.2px rgba(0, 0, 0, 0.02),
-        0 0px 5.3px rgba(0, 0, 0, 0.028),
-        0 0px 10px rgba(0, 0, 0, 0.035),
-        0 0px 17.9px rgba(0, 0, 0, 0.042),
-        0 0px 33.4px rgba(0, 0, 0, 0.05),
-        0 0px 80px rgba(0, 0, 0, 0.07)
-      ;
       transition: 150ms;
     }
-    
-    .project:hover {
-      box-shadow: none;
-      transition: 150ms;
-    }
-    
+
     img {
       cursor: pointer;
     }

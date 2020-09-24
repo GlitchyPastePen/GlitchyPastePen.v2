@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { store } from './store'
 import axios from 'axios'
 import firebase from 'firebase/app'
+import VueSession from 'vue-session'
+
+const options = {
+    persist: true
+}
 
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
+Vue.use(VueSession, options)
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -25,6 +30,5 @@ Vue.prototype.$firebase = firebase;
 
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount('#app')
