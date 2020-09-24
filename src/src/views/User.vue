@@ -3,22 +3,29 @@
         <br><br>
         <center>
             <img :src="user.avatar_url" style="border-radius:50%;width:300px;" />
+            <h2>{{user.login}}</h2>
         </center>
 
+        <br><br>
+
         <div id="main">
+            <h3 class="sub-heading">PROJECTS BY {{user.login}}</h3>
             <div class = "project" v-for="project in projects">
-            {{project.key}} &nbsp;&nbsp;
-            <br />
-            <img style="float:right;margin-right:20px;" onclick="remove('<%= project.key %>')" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fdelete.svg?v=1589450120507" height="30px">
-            <a :href="'/p/' + project.key"><img style="float:right;margin-right:10px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fexternal.svg?v=1589450399039" height="30px;"></a>
-            <a :href="'/editor/' + project.key"><img style="float:right;margin-right:15px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fedit.svg?v=1589450679556" height="30px"></a>
-            <br /><br />
+                <span class="project-name">{{project.key}} &nbsp;&nbsp;</span>
+                <span class="options">
+                    <!-- <i class="fas fa-trash-alt" style="float:right;margin-right:20px;"></i> -->
+                    <i class="fas fa-external-link-alt" style="float:right;margin-right:20px;"></i>
+                    <!-- <i class="fas fa-pencil-alt" style="float:right;margin-right:15px;"></i> -->
+                </span>
             </div>
         </div>
+        <Footer />
     </div>
 </template>
 
 <script>
+
+    import Footer from "@/components/Footer.vue";
 
     export default {
         name: 'User',
@@ -27,6 +34,9 @@
                 user: null,
                 projects: null
             }
+        },
+        components: {
+            Footer
         },
         mounted: function() {
 
@@ -72,8 +82,9 @@
     }
     
     #main {
-      margin-left: 15vw;
-      margin-right: 15vw;
+      margin-left: 15%;
+      margin-right: 15%;
+      margin-bottom: 300px;
     }
     
     .project {
@@ -82,8 +93,7 @@
       padding-bottom: 10px;
       font-family: "Fira Mono", "Inter", "Raleway", sans-serif;
       transition: 1s ease;
-      background-color: white;
-      border: 1px solid grey;
+      border: 3px solid yellow;
       border-radius: 5px;
       margin-top: 20px;
       display: block;
@@ -91,19 +101,6 @@
       left: 0px;
       font-size: 25px;
       overflow: hidden;
-      box-shadow:
-        0 0px 2.2px rgba(0, 0, 0, 0.02),
-        0 0px 5.3px rgba(0, 0, 0, 0.028),
-        0 0px 10px rgba(0, 0, 0, 0.035),
-        0 0px 17.9px rgba(0, 0, 0, 0.042),
-        0 0px 33.4px rgba(0, 0, 0, 0.05),
-        0 0px 80px rgba(0, 0, 0, 0.07)
-      ;
-      transition: 150ms;
-    }
-    
-    .project:hover {
-      box-shadow: none;
       transition: 150ms;
     }
     
@@ -175,6 +172,10 @@
       right: 100%;
       width: 100%;
       height: 2px;
+    }
+
+    .sub-heading {
+        font-family: "IBM Plex Mono", monospace;
     }
 
 </style>

@@ -1,25 +1,30 @@
 <template>
-    <div>
+    <div class="root">
         <center>
             <br><br>
             <img :src="user.avatar_url" style="border-radius:50%;width:300px;" />
             <h2>{{user.login}}</h2>
             <span class="email">{{user.email}}</span>
         </center>
+        <br><br>
         <div id="main">
+            <h3 class="sub-heading">YOUR PROJECTS</h3>
             <div class = "project" v-for="project in projects">
-                {{project.key}} &nbsp;&nbsp;
-                <br />
-                <img style="float:right;margin-right:20px;" onclick="remove('<%= project.key %>')" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fdelete.svg?v=1589450120507" height="30px">
-                <a :href="'/p/' + project.key"><img style="float:right;margin-right:10px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fexternal.svg?v=1589450399039" height="30px;"></a>
-                <a :href="'/editor/' + project.key"><img style="float:right;margin-right:15px;" src="https://cdn.glitch.com/622554c6-3118-4838-8819-e003b9525f5d%2Fedit.svg?v=1589450679556" height="30px"></a>
-                <br /><br />
+                <span class="project-name">{{project.key}} &nbsp;&nbsp;</span>
+                <span class="options">
+                    <i class="fas fa-trash-alt" style="float:right;margin-right:20px;"></i>
+                    <i class="fas fa-external-link-alt" style="float:right;margin-right:15px;"></i>
+                    <i class="fas fa-pencil-alt" style="float:right;margin-right:15px;"></i>
+                </span>
             </div>
         </div>
+        <Footer />
     </div>
 </template>
 
 <script>
+
+    import Footer from "@/components/Footer.vue";
 
     export default {
         name: 'User',
@@ -28,6 +33,9 @@
                 user: this.$session.get("github"),
                 projects: null
             }
+        },
+        components: {
+            Footer
         },
         created: function() {
             if (!this.$session.exists()) {
@@ -87,6 +95,7 @@
     #main {
       margin-left: 15%;
       margin-right: 15%;
+      margin-bottom: 300px;
     }
     
     .project {
@@ -174,6 +183,19 @@
       right: 100%;
       width: 100%;
       height: 2px;
+    }
+
+    .sub-heading {
+        font-family: "IBM Plex Mono", monospace;
+    }
+
+    .project-name {
+        display: inline-block;
+    }
+
+    .options {
+        float: right;
+        display: inline-block;
     }
 
 </style>

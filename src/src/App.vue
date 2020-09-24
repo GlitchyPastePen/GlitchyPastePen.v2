@@ -86,6 +86,8 @@
                         }
 
                         that.$session.set("github", await fetchGitHubUser(token));
+
+                        that.$router.push("/me");
  
                     })();
 
