@@ -43,10 +43,8 @@
     #intro {
         margin-left: 50px;
         margin-right: 50px;
-        border: 5px dashed yellow;
         margin-top: 50px;
         border-radius: 5px;
-        background-color: #272822;
         color: white;
     }
 

@@ -30,7 +30,7 @@
 
 </script>
 
-<style>
+<style scoped>
 
     footer {
         left: 0;
@@ -52,6 +52,10 @@
         right: 0px;
         width: 100%;
         z-index: -1;
+    }
+
+    button {
+        margin-bottom: 25px;
     }
 
 </style>

@@ -10,14 +10,15 @@
           src="https://cdn.khaleelgibran.com/glitchypastepen.png"
           height="100px"
       /></router-link>
-      <span style="float:right;margin-right:20px;">
-        <button v-if="loggedIn === true" @click="logout()">
-            Logout
-        </button>
+      <span style="float:right;margin-right:0px;">
+        <div class="user-menu" v-if="showMenu">
+            <span class="menu-option">My Projects</span><br>
+            <span class="menu-option" id="logout-option" @click="logout()">Logout</span>
+        </div>
         <button @click="login()" v-if="loggedIn === false">
             Login
         </button>
-        <img :src="user.photoURL" class="avatar" v-if="loggedIn === true" />
+        <img :src="user.photoURL" class="avatar" v-if="loggedIn === true" @click="showMenu = !showMenu" />
       </span>
     </header>
     <div id="blob">
@@ -44,7 +45,8 @@
         data: function() {
             return {
                 loggedIn: this._loggedIn || false,
-                user: null
+                user: null,
+                showMenu: false
             }
         },
         computed: {
@@ -96,16 +98,21 @@
                 // console.log(this.$store.getters.isLoggedIn)
             },
             logout: function() {
+                // var that = this;
+                // (async() => {
+                //     try {
+                //         await firebase.auth().signOut();
+                //         that.$store.commit('logIn', false);
+                //         that.loggedIn = false;
+                //     } catch (e){
+                //         console.error(e);
+                //     } 
+                // })
                 var that = this;
-                (async() => {
-                    try {
-                        await firebase.auth().signOut();
-                        that.$store.commit('logIn', false);
-                        that.loggedIn = false;
-                    } catch (e){
-                        console.error(e);
-                    } 
-                })
+                firebase.auth().signOut().then(function() {
+                    that.$store.commit =('logIn', false);
+                    that.loggedIn = false;
+                });
             }
         }
     }
@@ -148,12 +155,13 @@
         color: white;
         font-family: "Inter", sans-serif;
         transition: 300ms !important;
-        margin-bottom: 10px;
+        margin-bottom: 0px;
         padding-top: 10px;
         padding-right: 20px;
         padding-bottom: 10px;
         padding-left: 20px;
         border-radius: 5px;
+        vertical-align: middle;
     }
 
     button:hover {
@@ -174,5 +182,41 @@
         border-radius: 50%;
         width: 50px;
         height: 50px;
+        vertical-align: middle;
+        margin-right: 20px;
+        cursor: pointer;
+        box-shadow:
+            0 0px 1.2px rgba(0, 0, 0, 0.025),
+            0 0px 2.7px rgba(0, 0, 0, 0.037),
+            0 0px 4.6px rgba(0, 0, 0, 0.046),
+            0 0px 6.9px rgba(0, 0, 0, 0.053),
+            0 0px 10px rgba(0, 0, 0, 0.06),
+            0 0px 14.2px rgba(0, 0, 0, 0.067),
+            0 0px 20.1px rgba(0, 0, 0, 0.074),
+            0 0px 29.2px rgba(0, 0, 0, 0.083),
+            0 0px 45px rgba(0, 0, 0, 0.095),
+            0 0px 80px rgba(0, 0, 0, 0.12)
+        ;
+    }
+
+    .user-menu {
+        position: absolute;
+        width: 100px;
+        background-color: white;
+        padding: 10px 10px;
+        border-radius: 5px;
+        top: 70px;
+        right: 20px;
+        font-size: 14px;
+    }
+
+    .menu-option {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        cursor: pointer;
+    }
+
+    #logout-option {
+        color: red;
     }
 </style>
