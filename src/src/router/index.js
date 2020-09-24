@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path: '/edit/:project',
-    component: () => import('../views/Editor.vue')
+    component: () => import('../views/AceEditor.vue')
   }
 ];
 

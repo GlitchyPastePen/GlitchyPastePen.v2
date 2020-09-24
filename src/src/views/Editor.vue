@@ -1,5 +1,7 @@
 <template>
-    <AceEditor />
+    <span>
+        <AceEditor />
+    </span>
 </template>
 
 <script>
@@ -8,6 +10,11 @@
 
     export default {
         name: 'Editor',
+        data: function() {
+            return {
+                project_name: this.$route.params.user || null
+            }
+        },
         components: {
             AceEditor
         }
