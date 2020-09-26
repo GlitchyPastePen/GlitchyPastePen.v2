@@ -9,7 +9,8 @@
         <br><br>
         <div id="main">
             <h3 class="sub-heading">YOUR PROJECTS</h3>
-            <div class = "project" v-for="project in projects">
+            <div class="skeleton" v-if="projectsLoaded === false">&nbsp;<br>&nbsp;</div>
+            <div class = "project" v-for="project in projects" v-if="projectsLoaded === true">
                 <span class="project-name">{{project.key}} &nbsp;&nbsp;</span>
                 <span class="options">
                     <i class="fas fa-trash-alt" style="float:right;margin-right:20px;"></i>
@@ -31,7 +32,9 @@
         data: function() {
             return {
                 user: this.$session.get("github"),
-                projects: null
+                projects: null,
+                projectsLoaded: false,
+                userLoaded: false,
             }
         },
         components: {
@@ -51,7 +54,10 @@
 
             fetch(`https://gppapi.now.sh/api/projects?user=${githubUser}`)
                 .then(res => res.json())
-                .then(data => this.projects = data)
+                .then(data => {
+                    this.projects = data;
+                    this.projectsLoaded = true;
+                })
 
         }
     }
@@ -197,5 +203,16 @@
         float: right;
         display: inline-block;
     }
+
+    .skeleton {
+        border-radius: 5px;
+        background-color: #586069;
+        width: 100%;
+        padding-top: 10px;
+        padding-left: 20px;
+        padding-bottom: 10px;
+        border: 3px solid #586069;
+    }
+
 
 </style>
