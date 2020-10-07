@@ -5,7 +5,7 @@
                 GlitchyPastePen.
             </h1>
             <p class="desc">
-                Create simple front-end projects, mainly with HTML, CSS and JS using an online code editor and instantly host it.
+                Create and test HTML, CSS and Javascript code snippets with an online code editor & hosting.
             </p>
             <center>
                 <img
@@ -34,7 +34,7 @@
 <style scoped>
 
     .main {
-        font-size: calc(100vw / 12.8);
+        font-size: calc(80vw / 12.8);
         font-weight: 740;
         text-align: center;
         font-family: "Inter", sans-serif;
@@ -53,6 +53,7 @@
         margin-right: 15%;
         font-size: calc(35vw / 12.8);
         font-family: "Fira Mono", "IBM Plex Mono", monospace;
+        text-align: center;
     }
 
 </style>

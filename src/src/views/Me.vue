@@ -14,8 +14,8 @@
                 <span class="project-name">{{project.key}} &nbsp;&nbsp;</span>
                 <span class="options">
                     <i class="fas fa-trash-alt" style="float:right;margin-right:20px;"></i>
-                    <i class="fas fa-external-link-alt" style="float:right;margin-right:15px;"></i>
-                    <i class="fas fa-pencil-alt" style="float:right;margin-right:15px;"></i>
+                    <a :href="'https://gppp.now.sh/' + project.key"><i class="fas fa-external-link-alt" style="float:right;margin-right:15px;"></i></a>
+                    <router-link :to="'/edit/' + project.key"><i class="fas fa-pencil-alt" style="float:right;margin-right:15px;"></i></router-link>
                 </span>
             </div>
         </div>
@@ -212,6 +212,29 @@
         padding-left: 20px;
         padding-bottom: 10px;
         border: 3px solid #586069;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .skeleton::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -150px;
+        top: 0;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(to right, transparent 0%, #E8E8E8 50%, transparent 100%);
+        animation: load 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+
+    @keyframes load {
+        from {
+            left: -150px;
+        }
+        to   {
+            left: 100%;
+        }
     }
 
 

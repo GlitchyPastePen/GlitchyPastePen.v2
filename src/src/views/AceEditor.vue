@@ -17,12 +17,11 @@
                     Copy code 
                 </button>
                 <button class="deploy">
-                    <a href="" id="preview-link" target="_blank">Preview</a>
+                    <a :href="'https://gppp.now.sh/' + project.name" id="preview-link" target="_blank">Preview</a>
                 </button>
-                <input type="text" id="project-name" oninput="changename()" />&nbsp;&nbsp;&nbsp;<div class="pulseAnim" :value="project.name"></div>
-                <br />
+                <input type="text" id="project-name" oninput="changename()" :value="project.name" />&nbsp;&nbsp;&nbsp;<div class="pulseAnim" ></div>
                 <p class="empty">
-                    <a href="" class="owner"></a>
+                    by <a :href="'https://github.com/' + project.owner" class="owner">{{project.owner}}</a>
                 </p>
             </div>
             <aside id="filetree">
@@ -51,11 +50,11 @@
                     SETTINGS
                 </span>
                 <span class="right code" id="pos"> </span>
-                <a href="/me">
+                <router-link to="/me">
                     <span class="right code">
                         MY PROJECTS
                     </span>
-                </a>
+                </router-link>
                 <a onclick="contributor()">
                     <span class="right code" style="cursor:pointer;">
                         ADD CONTRIBUTOR
@@ -166,6 +165,7 @@
                     console.log(this.htmlSession);
                     this.loaded = true;
                 })
+
             axios.get(`https://gppapi.now.sh/api/project?project=${project_name}`)
                 .then(response => {
                     this.project = response.data;
@@ -326,7 +326,6 @@
     }
 
     .owner {
-        margin-left: 10px;
         margin-top: 0px;
         color: white;
     }
@@ -373,5 +372,16 @@
     .code {
         font-family: "Fira Mono", "IBM Plex Mono", monospace;
     }
+    
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .empty {
+        margin-left: 10px;
+        margin-top: 0px;
+    }
+    
 
 </style>

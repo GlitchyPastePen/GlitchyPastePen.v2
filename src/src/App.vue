@@ -11,14 +11,14 @@
           height="100px"
       /></router-link>
       <span style="float:right;margin-right:0px;">
-        <div class="user-menu" v-if="showMenu">
+        <div class="user-menu" v-if="showMenu" v-closable="{ exclude: ['button'], handler: 'hideMenu' }">
             <router-link to="/me"><span class="menu-option">My Projects</span></router-link><br>
             <span class="menu-option" id="logout-option" @click="logout()">Logout</span>
         </div>
         <button @click="login()" v-if="loggedIn === false">
             Login
         </button>
-        <img :src="user.photoURL" class="avatar" v-if="loggedIn === true" @click="showMenu = !showMenu" />
+        <img :src="user.photoURL" class="avatar" v-if="loggedIn === true" @click="showMenu = !showMenu" ref="button" />
       </span>
     </header>
     <div id="blob">
@@ -72,7 +72,16 @@
 
                     that.$session.start();
                     that.$session.set("user", user);
-                    that.$session.set("accessToken". token);
+                    that.$session.set("accessToken", token);
+                    
+                    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                        // Send token to your backend via HTTPS
+                        console.log("idToken:");
+                        console.log(idToken);
+                        // ...
+                    }).catch(function(error) {
+                        // Handle error
+                    });
                     
                     (async() => {
             
@@ -88,6 +97,8 @@
                         that.$session.set("github", await fetchGitHubUser(token));
 
                         that.$router.push("/me");
+
+
  
                     })();
 
@@ -97,6 +108,8 @@
                     var errorMessage = error.message;
                     var email = error.email;
                     var credential = error.credential;
+
+                    console.error(error);
 
                     return;
                 })
@@ -124,6 +137,13 @@
                     that.$session.destroy();
                     that.loggedIn = false;
                 });
+            },
+            hideMenu() {
+                if (this.$session.exists() === true) {
+                    if (this.showMenu === true) {
+                        this.showMenu = false;
+                    }
+                }
             }
         },
         created: function() {
