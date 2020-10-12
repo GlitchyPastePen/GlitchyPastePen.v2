@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "tunnel": "lt --port 8080 --subdomain glitchypastepen",
     "build": "vue-cli-service build"
   },
   "dependencies": {

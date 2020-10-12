@@ -1,6 +1,6 @@
 <template>
     <span>
-        <div v-if="loaded === false">
+        <div v-if="loaded === false" id="loader">
             <center>
                 Your project is loading...
             </center>
@@ -383,5 +383,9 @@
         margin-top: 0px;
     }
     
+    #loader {
+        height: 100%;
+        width: 100%;
+    }
 
 </style>

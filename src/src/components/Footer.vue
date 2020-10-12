@@ -9,23 +9,43 @@
           ></path>
         </svg>
       </div>
-      <small>
-        &copy; 2020 @khalby786 and @17lwinn (The GlitchyPastePen devs)
-      </small>
-      <br /><br />
-      <a href="/status"><button>
-        Site Health Graphs
-      </button></a>
-      <a href="https://glitchypastepen.statuspage.io"><button>
-        System Status
-      </button></a>
+      <center>
+        <small>
+          &copy; 2020 <a href="https://github.com/khalby786/GlitchyPastePen">GitHub</a>
+        </small>
+        <br /><br />
+        <!-- <a href="/status"><button>
+          Site Health Graphs
+        </button></a> -->
+      
+        <a href="https://glitchypastepen.statuspage.io">
+          <button class="small-button">
+            <span id="color-indicator" :class="status"></span>{{description}}
+          </button>
+        </a>
+      </center>
     </footer>
 </template>
 
 <script>
 
     export default {
-        name: 'Footer'
+        name: 'Footer',
+        data: function() {
+          return {
+            description: "System Status",
+            status: "none",
+          }
+        },
+        mounted: function() {
+          fetch("https://ns46nm0bl44x.statuspage.io/api/v2/status.json")
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              this.description = data.status.description;
+              this.status = data.status.indicator;
+            })
+        }
     }
 
 </script>
@@ -33,29 +53,66 @@
 <style scoped>
 
     footer {
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 15%;
-        color: white;
-        text-align: center;
-        margin-bottom: 0px;
-        padding-top: 20px;
-        position: relative;
-        font-family: "IBM Plex Mono", monospace;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 15%;
+      color: white;
+      text-align: center;
+      margin-bottom: 0px;
+      padding-top: 20px;
+      position: relative;
+      font-family: "IBM Plex Mono", monospace;
     }
 
     #wave {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-        width: 100%;
-        z-index: -1;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      width: 100%;
+      z-index: -1;
     }
 
     button {
-        margin-bottom: 25px;
+      margin-bottom: 25px;
+      margin-right: 0px;
+      margin-left: 0px;
+    }
+
+    .small-button {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .critical {
+      background-color: #e74c3c;
+    }
+
+    .major {
+      background-color:#e67e22;
+    }
+    
+    .minor {
+      background-color: #f1c40f;
+    }
+    
+    .none {
+      background-color: #2ecc71;
+    }
+
+    #color-indicator {
+      -moz-border-radius: 30px; /* or 50% */
+      border-radius: 30px;
+      display:inline-block;
+      width:10px;
+      height:10px;
+      margin-right:5px;
+    }
+
+    a {
+      color: inherit;
     }
 
 </style>
