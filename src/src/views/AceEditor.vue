@@ -2,7 +2,11 @@
     <span>
         <div v-if="loaded === false" id="loader">
             <center>
-                Your project is loading...
+                <div class="donutSpinner"></div><br><br>
+                <b>Loading...</b>
+                <br><br>
+                <p style="font-family:'Fira Code', 'IBM Plex Mono', monospace;">{{project_name}}</p>
+                <Footer />
             </center>
         </div>
         <span v-else>
@@ -75,6 +79,7 @@
     const axios = require('axios')
 
     import { EditSession } from 'brace';
+    import Footer from "@/components/Footer.vue";
 
     export default {
         name: 'AceEditor',
@@ -90,11 +95,13 @@
                 cssCode: null,
                 jsCode: null,
                 loaded: false,
-                project: null
+                project: null,
+                project_name: null,
             }
         },
         components: {
-            editor: require('vue2-ace-editor')
+            editor: require('vue2-ace-editor'),
+            Footer
         },
         methods: {
             editorInit: function (editor) {
@@ -151,6 +158,7 @@
         },
         created: function() {
             let project_name = this.$route.params.project;
+            this.project_name = project_name;
             console.log(project_name)
             axios.get(`https://gppapi.now.sh/api/code?project=${project_name}`)
                 .then(response => {
@@ -163,7 +171,11 @@
                     this.cssSession.setValue(response.data.css);
                     this.jsSession.setValue(response.data.js);
                     console.log(this.htmlSession);
-                    this.loaded = true;
+                    // this.loaded = true;
+                    var that = this;
+                    setTimeout(function() {
+                        that.loaded = true;
+                    }, 7000)
                 })
 
             axios.get(`https://gppapi.now.sh/api/project?project=${project_name}`)
@@ -386,6 +398,31 @@
     #loader {
         height: 100%;
         width: 100%;
+        margin-top: 30vh;
     }
+
+    .donutSpinner {
+        display: inline-block;
+        border: 4px solid hsl(222, 100%, 95%);;
+        border-left-color: hsl(243, 80%, 62%);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: donut-spin 1.2s linear infinite;
+    }
+
+    @keyframes donut-spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    footer {
+        position: absolute !important;
+    }
+
 
 </style>
