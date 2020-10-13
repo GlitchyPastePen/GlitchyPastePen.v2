@@ -22,6 +22,11 @@
           <button class="small-button">
             <span id="color-indicator" :class="status"></span>{{description}}
           </button>
+        </a>&nbsp;
+        <a href="https://forum.glitchypastepen.me">
+           <button class="small-button">
+              Forum
+          </button>
         </a>
       </center>
     </footer>

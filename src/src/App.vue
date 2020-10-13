@@ -78,6 +78,7 @@
                         // Send token to your backend via HTTPS
                         console.log("idToken:");
                         console.log(idToken);
+                        this.$session.set("idToken", idToken);
                         // ...
                     }).catch(function(error) {
                         // Handle error

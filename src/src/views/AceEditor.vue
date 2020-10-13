@@ -14,7 +14,7 @@
             <!--       <button class="deploy" onclick="beautify()" title="Beautify code!">
                     Beautify
                 </button> -->
-                <button class="deploy" onclick="deploy();" title="Save code!">
+                <button class="deploy" @click="deploy" title="Save code!">
                     Save & deploy
                 </button>
                 <button class="deploy" onclick="simplecopy(editor.getValue())">
@@ -76,7 +76,8 @@
 
 <script>
 
-    const axios = require('axios')
+    const axios = require('axios');
+    var fetch = require('node-fetch');
 
     import { EditSession } from 'brace';
     import Footer from "@/components/Footer.vue";
@@ -91,7 +92,7 @@
                 htmlSession: new EditSession("<html></html>"),
                 cssSession: new EditSession("body { color: red; }"),
                 jsSession: new EditSession("console.log('//hi')"),
-                htmlCode: null,
+                htmlCode: null, 
                 cssCode: null,
                 jsCode: null,
                 loaded: false,
@@ -155,6 +156,28 @@
                 this.lang = "javascript"
                 this.$refs.gpp.editor.setSession(this.jsSession);
             },
+            deploy() {
+
+                (async() => {
+
+                    let req = await fetch("https://gppapi.now.sh", {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.$session.get("idToken")}`
+                        },
+                        body: JSON.stringify({ "project": this.project_name, "html": this.htmlSession.getValue(), "css": this.cssSession.getValue(), "js": this.jsSession.getValue() })
+                    })
+
+                    let res = await req.json();
+
+                    if (res.status == 200) {
+                        alert("Yaay, I think it worked!")
+                    }
+
+                })();
+            }
         },
         created: function() {
             let project_name = this.$route.params.project;
