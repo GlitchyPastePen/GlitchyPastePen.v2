@@ -160,7 +160,7 @@
 
                 (async() => {
 
-                    let req = await fetch("https://gppapi.now.sh", {
+                    let req = await fetch("https://api.glitchypastepen.me", {
                         method: 'POST',
                         mode: 'cors',
                         headers: {
