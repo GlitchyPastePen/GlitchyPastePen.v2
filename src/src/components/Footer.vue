@@ -19,12 +19,12 @@
         </button></a> -->
       
         <a href="https://glitchypastepen.statuspage.io">
-          <button class="small-button">
+          <button class="small-button block">
             <span id="color-indicator" :class="status"></span>{{description}}
           </button>
         </a>&nbsp;
         <a href="https://forum.glitchypastepen.me">
-           <button class="small-button">
+           <button class="small-button block">
               Forum
           </button>
         </a>
@@ -89,6 +89,7 @@
       padding-top: 5px;
       padding-bottom: 5px;
       font-size: 14px;
+      display: inline-block;
     }
 
     .critical {

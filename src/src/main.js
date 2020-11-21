@@ -3,7 +3,10 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import firebase from 'firebase/app'
+require('firebase/auth');
+require('firebase/database');
 import VueSession from 'vue-session'
+import VTooltip from 'v-tooltip'
 
 const options = {
     persist: true
@@ -57,7 +60,8 @@ Vue.directive('closable', {
 
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
-Vue.use(VueSession, options)
+Vue.use(VueSession, options);
+Vue.use(VTooltip);
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -72,7 +76,11 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// initialize firebase database
+var database = firebase.database();
+
 Vue.prototype.$firebase = firebase;
+Vue.prototype.$realtimeDatabase = database;
 
 new Vue({
   router,
