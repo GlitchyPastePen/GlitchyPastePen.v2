@@ -213,6 +213,7 @@ button {
   border: 1px solid white;
   margin-right: 20px;
   font-size: 16px;
+  font-family: "Fira Mono", "IBM Plex Mono", monospace !important;
   background-color: black;
   color: white;
   font-family: "Inter", sans-serif;

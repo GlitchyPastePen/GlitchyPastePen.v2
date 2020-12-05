@@ -37,6 +37,14 @@ const routes = [
   {
     path: '/edit/:project',
     component: () => import('../views/Editor.vue')
+  },
+  {
+    path: '/new',
+    component: () => import('../views/New.vue')
+  },
+  {
+    path: '/node',
+    component: () => import('../views/Node.vue')
   }
 ];
 
