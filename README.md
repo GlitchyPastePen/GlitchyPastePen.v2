@@ -1,6 +1,19 @@
-# GlitchyPastePen.v2
+# src
 
-GlitchyPastePen v2.0 planned to be built using Vue &amp; Netlify.
+## Project setup
+```
+npm install
+```
 
-- `src` contains all the Vue code.
-- `api` contains serverless functions
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
