@@ -1,9 +1,10 @@
 <template>
   <footer>
-    <h2>GlitchyPastePen</h2>
+    <h2><router-link to="/">GlitchyPastePen</router-link></h2>
+    <p class="power">© 2020 <a href="https://github.com/khalby786/">Khaleel Gibran</a></p>
     <br />
     <span class="button-wrap">
-      <a href="https://glitchypastepen.statuspage.io">
+      <a href="https://status.glitchypastepen.me">
         <button class="small-button block">
           <span id="color-indicator" :class="status"></span>{{ description }}
         </button> </a
@@ -82,11 +83,12 @@ button {
 }
 
 .power {
-  display: inline-block;
   text-align: right;  
   float: right;
   margin-right: 20px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Fira Code", "Fira Mono", "Poppins", sans-serif;
+  margin-bottom: 0px;
+  font-weight: bold;
 }
 
 .small-button {

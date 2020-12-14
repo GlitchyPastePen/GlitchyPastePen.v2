@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="500" viewBox="0 0 500 500">
+  <defs>
+    <clipPath id="clip-Custom_Size_1">
+      <rect width="500" height="500"/>
+    </clipPath>
+  </defs>
+  <g id="Custom_Size_1" data-name="Custom Size – 1" clip-path="url(#clip-Custom_Size_1)">
+    <path id="Path_1" data-name="Path 1" d="M431.276,268.163c30.59,7.775,65.63-7.509,92.659,8.791,26.948,16.251,32.515,52.045,50.748,77.693,20.483,28.813,57.307,47.964,63.342,82.8,6.135,35.411-12.318,70.787-31.466,101.2-18.732,29.751-48.693,48.436-76.384,70.1-31.909,24.961-58.475,64.335-98.9,67.017-40.392,2.68-78.452-24.45-106.779-53.368-25.519-26.052-21.237-69.11-42.33-98.858-24.261-34.215-79.676-45.151-88.809-86.088-8.874-39.775,25.752-75.474,44.715-111.546,19.685-37.445,28.142-92.032,68.675-104.144,43.18-12.9,80.851,35.309,124.529,46.41" transform="translate(-165.929 -197.576)" fill="none" stroke="#11eed8" stroke-width="20"/>
+    <text id="Not_Found_:_" data-name="Not Found :(" transform="translate(84 264)" fill="#fff" font-size="45" font-family="FiraCode-Retina, Fira Code Retina"><tspan x="0" y="0">Not Found :(</tspan></text>
+  </g>
+</svg>

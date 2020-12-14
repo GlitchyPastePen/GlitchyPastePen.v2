@@ -45,6 +45,10 @@ const routes = [
   {
     path: '/node',
     component: () => import('../views/Node.vue')
+  },
+  {
+    path: '*',
+    component: () => import('../views/NotFound.vue')
   }
 ];
 

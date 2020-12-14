@@ -9,8 +9,8 @@
                 <p style="font-family: 'Fira Code', 'IBM Plex Mono', monospace">
                     {{ project_name }}
                 </p>
-                <Footer />
             </center>
+            <Footer />
         </div>
         <div class="header" v-if="loaded === true">
             <button class="project-name round fixed block">{{project.name}}</button>
@@ -19,13 +19,13 @@
             <button @click="editor = 'js'" class="block lang-option">JavaScript</button>
 
             <button class="actions accent block" @click="deploy"><i class="far fa-save"></i> <span v-html="deployingText"></span></button>
-            <button class="actions accent block"><i class="fas fa-external-link-alt"></i> Open preview in a new tab</button>
+            <button class="actions accent block"><a :href="'https://gppp.netlify.app/' + project_name" target="_blank"> <i class="fas fa-external-link-alt"></i> Open preview in a new tab</a></button>
         </div>
         <div class="editor-iframe">
             <MonacoEditor ref="htmlEditor" @editorDidMount="updateDimensions" v-if="editor === 'html' && loaded === true" class="editor" v-model="htmlCode" language="html" theme="vs-dark"/>
             <MonacoEditor ref="cssEditor" v-if="editor === 'css' && loaded === true" class="editor" v-model="cssCode" language="css" theme="vs-dark"/>
             <MonacoEditor ref="jsEditor" v-if="editor === 'js' && loaded === true" class="editor" v-model="jsCode" language="javascript" theme="vs-dark"/>
-            <iframe v-if="loaded === true" :src="'https://gppp.now.sh/' + project_name"></iframe>
+            <iframe v-if="loaded === true" :src="'https://gppp.netlify.app/' + project_name"></iframe>
             <!-- <iframe :src="'https://xkcd.com'"></iframe> -->
         </div>
     </div>
@@ -249,5 +249,10 @@ body {
 
 footer {
   position: absolute !important;
+}
+
+a {
+    color: inherit;
+    text-decoration: none !important;
 }
 </style>
